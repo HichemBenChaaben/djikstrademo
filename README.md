@@ -7,4 +7,4 @@ Finding the shortest possible path based on https://en.wikipedia.org/wiki/Dijkst
 npm install && bower install
 
 ## Start lite-server
-npm install && npm start
+npm start
