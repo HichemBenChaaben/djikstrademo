@@ -1,0 +1,101 @@
+<div class="col-xs-12 col-md-4 app-form">
+  <form autocomplete="off" novalidate name="form" role="form" ng-submit="vm.getPath()">
+    <legend>Trip sorter</legend>
+    <div class="form-group dropdown">
+      <select name="departure" ng-model="vm.departure" class="form-control" required>
+        <option value="" disabled>-- From ---</option>
+        <option value="{{city}}" ng-disabled="vm.destination == city" ng-repeat="city in vm.cityArr track by $index">
+          {{city}}
+        </option>
+      </select>
+        <span class="app-search__switch-btn">
+          <a ng-href="" ng-click="vm.flipDest()" class="btn">
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+          </a>
+        </span>
+      <select name="destination" ng-model="vm.destination" class="form-control" required>
+        <option value="" disabled>-- To --</option>
+        <option value="{{city}}" ng-disabled="vm.departure == city" ng-repeat="city in vm.cityArr track by $index">
+          {{city}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group radio-group">
+      <div class="radio-w">
+        <label>
+          <input type="radio"
+                 ng-checked="vm.mode=='fastest'"
+                 name="mode"
+                 ng-model="vm.mode"
+                 value="fastest"/>
+          <span>Fastest</span>
+        </label>
+        <label>
+          <input type="radio"
+                 ng-checked="vm.mode=='cheapest'"
+                 name="mode"
+                 ng-model="vm.mode"
+                 value="cheapest"/>
+          <span>Cheapest</span>
+        </label>
+      </div>
+    </div>
+    <hr/>
+      <span ng-if="form.$error && form.$submitted">
+        <span ng-if="form.departure.$error.required || form.departure.$error.required">
+          <div class="alert alert-danger">
+            <i class="fa fa-info-circle"></i>Please select both departure and arrival
+          </div>
+        </span>
+      </span>
+    <button type="submit" class="btn btn-lg btn-success pull-right">
+      <i class="fa fa-search"></i> Search
+    </button>
+  </form>
+</div>
+<div class="col-xs-12 col-md-8">
+  <div class="col-xs-12">
+    <div class="trip-sort">
+      <div class="trip-sort__card text-center" ng-repeat="trip in vm.referenceOffers track by $index">
+        <div>
+          <span class="trip-sort__departure">{{trip.departure}}</span>
+          <span><i class="fa fa-arrow-right"></i></span>
+          <span class="trip-sort__arrival">{{trip.arrival}}</span>
+            <span class="trip-sort__cost">
+              {{trip.cost - (trip.cost * trip.discount / 100) |currency:vm.data.currency}}
+              <small ng-if="trip.discount > 0">
+                <strike>{{trip.cost | currency:vm.data.currency}}</strike>
+              </small>
+
+            </span>
+        </div>
+        <div>
+          <span class="trip-sort__transport"><i class="fa fa-{{trip.transport}}"></i> {{trip.transport}}</span>
+          <span class="trip-sort__reference">{{trip.reference}}</span>
+          <span>For</span>
+            <span class="trip-sort__duration">
+              <i class="fa fa-clock-o"></i>  {{trip.duration.h}}h: {{trip.duration.m}}
+            </span>
+        </div>
+      </div>
+      <div ng-if="vm.totalTripTime" class="trip-sort__card trip-sort__total text-center">
+        <span class="text-left">Total</span>
+          <span class="trip-sort__total__time text-center">
+            <span>{{vm.totalTripTime.h | number:0}} hours <span ng-if="vm.totalTripTime.m">and {{vm.totalTripTime.m}} minutes</span></span>
+          </span>
+          <span class="text-right trip-sort__total__price">
+            {{vm.totalTripCost | currency:vm.data.currency}}
+          </span>
+      </div>
+    </div>
+    <div ng-if="vm.referenceOffers.length > 0"
+         class="trip-sort__cta">
+      <button type="button"
+              ng-click="vm.reset(form)"
+              class="btn btn-default">
+        <i class="fa fa-undo"></i> Reset
+      </button>
+    </div>
+  </div>
+</div>
+

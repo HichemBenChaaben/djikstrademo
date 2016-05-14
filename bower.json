@@ -1,0 +1,25 @@
+{
+  "name": "djikstras",
+  "main": "djikstras.js",
+  "authors": [
+    "Hichem <hichem.benchaaben@tajawal.com>"
+  ],
+  "description": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {},
+  "dependencies": {
+    "angular": "^1.5.5",
+    "bootstrap": "^3.3.6",
+    "lodash": "^4.12.0",
+    "moment": "^2.13.0",
+    "font-awesome": "^4.6.3"
+  }
+}
